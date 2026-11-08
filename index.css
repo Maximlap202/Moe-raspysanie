@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #09080d;
+  --color-surface: #17161e;
+  --color-surface-2: #23212b;
+  --color-fg: #f4f2f8;
+  --color-muted: #9b97a8;
+  --color-line: #322f3c;
+  --color-primary: #7c5cff;
+  --color-primary-fg: #ffffff;
+  --color-danger: #e25d6a;
+  --color-scrim: #07060c;
+  --color-on-scrim: #f7f5fb;
+  --radius-widget: 1.75rem;
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+:root[data-tone="day"] {
+  --color-bg: #f3f0fa;
+  --color-surface: #ffffff;
+  --color-surface-2: #e8e3f4;
+  --color-fg: #1c1726;
+  --color-muted: #6e6a7a;
+  --color-line: #ddd6ee;
+  --color-primary: #6b46ff;
+  --color-danger: #d23b4a;
+}
+
+@layer base {
+  html, body, #root { min-height: 100%; }
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+}
+
+@keyframes scene-pan {
+  from { transform: scale(1.05) translate3d(0, 0, 0); }
+  to { transform: scale(1.14) translate3d(-2.5%, -1.5%, 0); }
+}
+.scene-pan {
+  position: absolute;
+  inset: -8%;
+  background-size: cover;
+  background-position: center;
+  animation: scene-pan 22s ease-in-out infinite alternate;
+}
+.sheet-scroll { max-height: min(92dvh, 52rem); overflow: auto; }
+.pb-safe { padding-bottom: max(2rem, env(safe-area-inset-bottom)); }
+
+.particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.particle {
+  position: absolute; top: -12%; width: 0.2rem; height: 0.2rem;
+  border-radius: 999px; background: #fff; opacity: 0.72;
+  animation-name: particle-fall; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+.particles-rain .particle { width: 1px; height: 0.85rem; background: rgba(214, 226, 255, 0.8); }
+.particles-embers .particle { background: #ffb15a; animation-name: particle-rise; }
+.particles-dust .particle { background: rgba(255, 226, 186, 0.9); }
+.particles-bubbles .particle {
+  width: 0.4rem; height: 0.4rem; background: transparent;
+  box-shadow: inset 0 0 0 1px rgba(190, 235, 255, 0.85);
+}
+@keyframes particle-fall {
+  from { transform: translate3d(0, -10%, 0); }
+  to { transform: translate3d(6px, 130%, 0); }
+}
+@keyframes particle-rise {
+  from { transform: translate3d(0, 120%, 0); opacity: 0; }
+  20% { opacity: 0.85; }
+  to { transform: translate3d(-8px, -20%, 0); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-pan, .particle { animation: none; }
+  .particle { opacity: 0; }
+}

@@ -1,0 +1,6 @@
+{
+  "appId": "com.moeraspisanie.app",
+  "appName": "Moe Raspisanie",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
